@@ -1,12 +1,15 @@
+language: generic
+
 sudo: required
+
 services:
   - docker
 
 before_install:
-  - docker build -t rksinner/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t ryanskinner93/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run ryanskinner93/react-test npm test -- --coverage
+  - docker run -e CI=true ryanskinner93/react-test npm test -- --coverage
 
 after_success:
   - docker build -t ryanskinner93/multi-client ./client
